@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <title> Login </title>
 </head>
-<body style="background-color:gainsboro">
+<body style="background-color:gainsboro" name="login">
 <div>
-<form action="" method="post">
+<form action="" method="post">{% csrf_token %}
+    {% for message in messages %}
+    <li class="{{ message.tags }}">
+    {% if 'safe' in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}
+    </li>
+    {% endfor %}
     <label> USERNAME</label><br>
-    <input name="username" type="email" placeholder="Write Your Username"><br><br>
+    <input name="username" type="text" placeholder="Write Your Username"><br><br>
     <label>PASSWORD</label><br>
     <input name="password" type="password" placeholder="Write Your Password"><br><br>
     <input type="submit" values="LOGIN"><br><br>

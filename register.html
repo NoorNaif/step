@@ -2,20 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign up</title>
+    <title>Register</title>
 </head>
-<body style="background-color:gainsboro">
+<body style="background-color:gainsboro" name="register">
+
 <div>
-    <from method="POST">
+    <form action="" method="post">{% csrf_token %}
+        <lable>First Name:</lable><br>
+        <input type="text" name="firstname" id="firstname"><br><br>
+        <lable>Last Name:</lable><br>
+        <input type="text" name="lastname" id="lastname"><br><br>
         <lable>User Name:</lable><br>
-        <input type="text" name="one" id="name"><br><br>
+        <input type="text" name="username" id="username"><br><br>
         <lable>Email:</lable><br>
-        <input type="email" name="two" id="username"><br><br>
+        <input type="email" name="email" id="email"><br><br>
         <lable>Password:</lable><br>
-        <input type="password" name="three" id="password"><br><br>
+        <input type="password" name="password" id="password"><br><br>
+        <lable> Id :</lable><br>
+        <input type="text" name="id" id="id"><br><br>
+        <lable>Subject want to learn:</lable><br>
+        <input type="text" name="subject" id="subject"><br><br>
         <input type="submit" value="CREATE USER">
-    </from>
+    </form>
 </div>
-</body>
 </body>
 </html>
