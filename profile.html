@@ -5,11 +5,10 @@
     <title>Profile</title>
 </head>
 <body>
-<from action="">
+<from method="POST" action="loginView">
     <h1>Login Successful</h1>
     <lable>Welcome to your profile</lable>
-    <button type="submit">Logout</button>
 </from>
-
+    <a href="{% url 'home-page' %}">Logout</a>
 </body>
 </html>
