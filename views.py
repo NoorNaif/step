@@ -36,17 +36,17 @@ def loginView(request):
 		found=False
 		data2=(dict(data))
 		conn.close()
-		if username1 in data2.keys() and password1==str(int(data2[username1])):
+		if username1 in data2.keys() and password1 == str(int(data2[username1])):
 			user=username1
 			found=True
 
 		if found:
-			return render(request, "STEPAPP/profile.html")
+			return render(request, "STEP/profile.html")
 		else:
 			messages.error(request, 'Wrong username or password', extra_tags='safe')
-			return render(request, 'STEPAPP/login.html')
+			return render(request, 'STEP/login.html')
 	else:
-		return render(request, 'STEPAPP/login.html')
+		return render(request, 'STEP/login.html')
 
 def registerView(request):
 	conn = create_connection("mydb.db")
@@ -58,6 +58,7 @@ def registerView(request):
 		lastname1 = request.POST['lastname']
 		email1 = request.POST['email']
 		id1 = request.POST['id']
+		phonenumber1 = request.POST['phonenumber']
 		subject1 = request.POST['subject']
 		cur.execute("SELECT username, password FROM TeacherDetails")
 		data = cur.fetchall()
@@ -65,15 +66,12 @@ def registerView(request):
 		data2 = (dict(data))
 		#if username1 not in data2.keys():
 		cur = conn.cursor()
-		str="INSERT INTO TeacherDetails VALUES( "+password1+" , "+"'"+username1+"'"+" , "+"'"+firstname1+"'"+" , "+"'"+lastname1+"'"+" , "+"'"+email1+"'"+" , "+id1+" , "+"'"+subject1+"'"+" )"
-		print(str)
-		cur.execute(str)
+		cur.execute("INSERT INTO TeacherDetails VALUES( "+ "'"+password1+"'"+ " , "+"'"+username1+"'"+" , "+"'"+firstname1+"'"+" , "+"'"+lastname1+"'"+" , "+"'"+email1+"'"+" , "+id1+" , "+"'"+subject1+"'"+","+phonenumber1+" )")
+		#print(str)
+		#cur.execute(str)
 		conn.commit()
 	conn.close()
-	return render(request,'STEPAPP/register.html')
+	return render(request,'STEP/register.html')
 def profileVeiw(request):
 	if user!='':
-	 	return render(request,'STEPAPP/profile.html')
-
-
-
+	 	return render(request,'STEP/profile.html')
