@@ -11,6 +11,7 @@ from django.contrib import admin
  #     return redirect(request,'STEP/register')
 #return render(request,'STEP/login.html')
 global user
+global select
 user=''
 def create_connection(db_file):
     """ create a database connection to the SQLite database
@@ -25,20 +26,27 @@ def create_connection(db_file):
         print("error")
 
     return conn
+
 def loginView(request):
 	conn=create_connection("mydb.db")
 	cur=conn.cursor()
 	if request.method=='POST':
-		username1=request.POST['username']
-		password1=request.POST['password']
-		cur.execute("SELECT username, password FROM TeacherDetails")
+		a = request.POST['select1']
+		username1 = request.POST['username']
+		password1 = request.POST['password']
+		if a == '2':
+			cur.execute("SELECT username, password FROM TeacherDetails")
+		if a == '3':
+			cur.execute("SELECT username, password FROM StudentDetails")
+		if a == '4':
+			cur.execute("SELECT username, password FROM AdminDetails")
 		data = cur.fetchall()
-		found=False
-		data2=(dict(data))
+		found = False
+		data2 = (dict(data))
 		conn.close()
 		if username1 in data2.keys() and password1 == str(int(data2[username1])):
-			user=username1
-			found=True
+			user = username1
+			found = True
 
 		if found:
 			return render(request, "STEP/profile.html")
@@ -58,20 +66,28 @@ def registerView(request):
 		lastname1 = request.POST['lastname']
 		email1 = request.POST['email']
 		id1 = request.POST['id']
-		phonenumber1 = request.POST['phonenumber']
 		subject1 = request.POST['subject']
-		cur.execute("SELECT username, password FROM TeacherDetails")
+		phonenumber1 = request.POST['phonenumber']
+		a = request.POST['select1']
+		if a == '2':
+			cur.execute("SELECT username, password FROM TeacherDetails")
+		if a == '3':
+			cur.execute("SELECT username, password FROM StudentDetails")
 		data = cur.fetchall()
 		found = False
 		data2 = (dict(data))
 		#if username1 not in data2.keys():
 		cur = conn.cursor()
-		cur.execute("INSERT INTO TeacherDetails VALUES( "+ "'"+password1+"'"+ " , "+"'"+username1+"'"+" , "+"'"+firstname1+"'"+" , "+"'"+lastname1+"'"+" , "+"'"+email1+"'"+" , "+id1+" , "+"'"+subject1+"'"+","+phonenumber1+" )")
+		if a == '2':
+			cur.execute("INSERT INTO TeacherDetails VALUES( " + "'" + password1 + "'" + " , " + "'" + username1 + "'" + " , " + "'" + firstname1 + "'" + " , " + "'" + lastname1 + "'" + " , " + "'" + email1 + "'" + " , " + id1 + " , " + "'" + subject1 + "'" + "," + phonenumber1 + " )")
+		if a == '3':
+			cur.execute("INSERT INTO StudentDetails VALUES( " + "'" + password1 + "'" + " , " + "'" + username1 + "'" + " , " + "'" + firstname1 + "'" + " , " + "'" + lastname1 + "'" + " , " + "'" + email1 + "'" + " , " + id1 + " , " + "'" + subject1 + "'" + "," + phonenumber1 + " )")
 		#print(str)
 		#cur.execute(str)
 		conn.commit()
 	conn.close()
 	return render(request,'STEP/register.html')
+
 def profileVeiw(request):
 	if user!='':
 	 	return render(request,'STEP/profile.html')
