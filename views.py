@@ -40,6 +40,7 @@ def loginView(request):
 			cur.execute("SELECT username, password FROM StudentDetails")
 		if a == '4':
 			cur.execute("SELECT username, password FROM AdminDetails")
+
 		data = cur.fetchall()
 		found = False
 		data2 = (dict(data))
@@ -60,8 +61,9 @@ def registerView(request):
 	conn = create_connection("mydb.db")
 	cur = conn.cursor()
 	if request.method == 'POST':
-		username1 = request.POST['username']
+		#username1 = request.POST['username']
 		password1 = request.POST['password']
+		username1 = request.POST['username']
 		firstname1 = request.POST['firstname']
 		lastname1 = request.POST['lastname']
 		email1 = request.POST['email']
